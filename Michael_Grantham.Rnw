@@ -1,0 +1,111 @@
+\documentclass[10pt]{beamer}
+\usepackage[T1]{fontenc}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\usepackage{url}
+\ifx\hypersetup\undefined
+  \AtBeginDocument{%
+    \hypersetup{unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 0},pdfborderstyle={},backref=false,colorlinks=false}
+  }
+\else
+  \hypersetup{unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 0},pdfborderstyle={},backref=false,colorlinks=false}
+\fi
+\usepackage{breakurl}
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+ % this default might be overridden by plain title style
+ \newcommand\makebeamertitle{\frame{\maketitle}}%
+ % (ERT) argument for the TOC
+ \AtBeginDocument{%
+   \let\origtableofcontents=\tableofcontents
+   \def\tableofcontents{\@ifnextchar[{\origtableofcontents}{\gobbletableofcontents}}
+   \def\gobbletableofcontents#1{\origtableofcontents}
+ }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usetheme{PaloAlto}
+
+\makeatother
+
+\begin{document}
+<<setup, include=FALSE>>=
+library(knitr)
+opts_chunk$set(fig.path='figure/beamer-',fig.align='center',fig.show='hold',size='footnotesize')
+@
+
+\title[Michael Grantham Slides]{A concise record of the life and times of Michael Grantham}
+
+\author{Michael Grantham\thanks{I thank Dr. VanderPlas for accepting this (very) late assignment}}
+\makebeamertitle
+\begin{frame}{Background}
+
+\begin{itemize}
+\item I was born April 18, 1988 in St. Elizabeth's Hospital in south Lincoln.
+\item I've lived in Lincoln, Kansas City, and Manhattan
+
+\item I am a Master's Student in Statistics and I hope to work somewhere in Finance with machine learning. If I stop with a Master's, I will graduate May 2021. If I go on, God only knows how long I'll be in school.
+
+\end{itemize}
+\end{frame}
+
+\section{Favorite Animal}
+\begin{frame}[fragile]{Favorite Animal}
+
+\begin{figure}
+   \includegraphics[width= 0.8\linewidth]{Jaguar.jpg}
+\end{figure}
+\end{frame}
+
+\section{Favorite Graph}
+\begin{frame}[fragile]{Favorite Graph}
+
+Here is my favorite graph from this class. It is an analysis of the sentiment in the Edgar Allan Poe poem "The Raven" by stanza. It took a lot of code to get here, but here we are.
+
+<<warning=FALSE, message=FALSE, comment=FALSE, echo=FALSE, cache=FALSE,fig.width=4,fig.height=4,out.width='.45\\linewidth'>>=
+library(tidyverse)
+library(tidyr)
+library(tidytext)
+library(dplyr)
+library(ggplot2)
+library(quanteda)
+library (readr)
+raven <- readLines("the_raven_poe.txt")
+Encoding(raven) <- "UTF-8"
+
+raventib <- tibble(
+  text=raven
+)
+
+raventib_stanza <- raventib %>% mutate(stanza=ceiling(row_number()/7))
+
+tidy_raven <- raventib_stanza %>%
+  mutate(row=row_number()) %>%
+  unnest_tokens(word, text)
+
+sentimentanalysis <- tidy_raven %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(stanza, index = ceiling(row/7), sentiment) %>%
+  spread(sentiment, n, fill = 0) %>%
+  mutate(sentiment = positive - negative)
+
+
+ggplot(sentimentanalysis, aes(index, sentiment, fill = "red")) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  ggtitle("Sentiment by Stanza") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+@
+\end{frame}
+
+\section{CV}
+\begin{frame}{CV}
+
+
+\end{frame}
+
+\end{document}
