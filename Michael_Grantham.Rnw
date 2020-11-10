@@ -105,6 +105,7 @@ ggplot(sentimentanalysis, aes(index, sentiment, fill = "red")) +
 \section{CV}
 \begin{frame}{CV}
 
+\href{Simple_CV.pdf}{\beamerbutton{Click for CV}}
 
 \end{frame}
 

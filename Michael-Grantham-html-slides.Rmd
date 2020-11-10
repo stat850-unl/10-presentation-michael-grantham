@@ -5,7 +5,7 @@ date: November 10, 2020
 output: ioslides_presentation
 ---
 
-```{r error=FALSE, warning=FALSE, message=FALSE}
+```{r error=FALSE, warning=FALSE, message=FALSE, include=FALSE}
 library(tidyverse)
 library(tidyr)
 library(tidytext)
@@ -72,5 +72,4 @@ ggplot(sentimentanalysis, aes(index, sentiment, fill = "red")) +
 
 # Link
 
-- Get in bed
-- Count sheep
+[Here](Simple_CV.pdf) is my CV.

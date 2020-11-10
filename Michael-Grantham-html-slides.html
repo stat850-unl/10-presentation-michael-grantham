@@ -3125,32 +3125,6 @@ slide:not(.current) .plotly.html-widget{
           </hgroup>
   </slide>
 
-<pre class = 'prettyprint lang-r'>library(tidyverse)
-library(tidyr)
-library(tidytext)
-library(dplyr)
-library(ggplot2)
-library(quanteda)
-library (readr)
-raven &lt;- readLines(&quot;the_raven_poe.txt&quot;)
-Encoding(raven) &lt;- &quot;UTF-8&quot;
-
-raventib &lt;- tibble(
-  text=raven
-)
-
-raventib_stanza &lt;- raventib %&gt;% mutate(stanza=ceiling(row_number()/7))
-
-tidy_raven &lt;- raventib_stanza %&gt;%
-  mutate(row=row_number()) %&gt;%
-  unnest_tokens(word, text)
-
-sentimentanalysis &lt;- tidy_raven %&gt;%
-  inner_join(get_sentiments(&quot;bing&quot;)) %&gt;%
-  count(stanza, index = ceiling(row/7), sentiment) %&gt;%
-  spread(sentiment, n, fill = 0) %&gt;%
-  mutate(sentiment = positive - negative)</pre>
-
 <slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Where I’m from</h2></hgroup><article  id="where-im-from">
 
 </article></slide><slide class=""><hgroup><h2>Origins</h2></hgroup><article  id="origins">
@@ -3179,10 +3153,7 @@ sentimentanalysis &lt;- tidy_raven %&gt;%
 
 </article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Link</h2></hgroup><article  id="link">
 
-<ul>
-<li>Get in bed</li>
-<li>Count sheep</li>
-</ul></article></slide>
+<p><a href='Simple_CV.pdf' title=''>Here</a> is my CV.</p></article></slide>
 
 
   <slide class="backdrop"></slide>
