@@ -6,10 +6,10 @@ output: html_document
 ---
 
 
-[Here](Michael_Grantham.pdf) is my CV.
+[Here](Simple_CV.pdf) is my CV.
 
 I've created two sets of introductory slides:
 
-- [HTML slides](slides.html)
+- [HTML slides](Michael-Grantham-html-slides.html)
 
-- [Beamer slides](beamer_demo.pdf)
+- [Beamer slides](Michael_Grantham.pdf)

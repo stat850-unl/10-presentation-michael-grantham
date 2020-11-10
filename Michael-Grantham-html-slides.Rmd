@@ -1,0 +1,76 @@
+---
+title: "A Concise Record of the Life and Times of Michael Grantham"
+author: Michael Grantham
+date: November 10, 2020
+output: ioslides_presentation
+---
+
+```{r error=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(tidyr)
+library(tidytext)
+library(dplyr)
+library(ggplot2)
+library(quanteda)
+library (readr)
+raven <- readLines("the_raven_poe.txt")
+Encoding(raven) <- "UTF-8"
+
+raventib <- tibble(
+  text=raven
+)
+
+raventib_stanza <- raventib %>% mutate(stanza=ceiling(row_number()/7))
+
+tidy_raven <- raventib_stanza %>%
+  mutate(row=row_number()) %>%
+  unnest_tokens(word, text)
+
+sentimentanalysis <- tidy_raven %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(stanza, index = ceiling(row/7), sentiment) %>%
+  spread(sentiment, n, fill = 0) %>%
+  mutate(sentiment = positive - negative)
+```
+
+
+# Where I'm from
+
+## Origins
+
+-I was born April 18, 1988 in St. Elizabeth's Hospital in south Lincoln.
+
+-I've lived in Lincoln, Kansas City, and Manhattan
+
+-I am a Master's Student in Statistics and I hope to work somewhere in Finance with machine learning. If I stop with a Master's, I will graduate May 2021. If I go on, God only knows how long I'll be in school.
+
+
+# Favorite Animal
+
+## Jaguar
+
+```{r, echo=FALSE, out.width='100%'}
+knitr::include_graphics('./Jaguar.jpg')
+```
+
+# Favorite Chart
+
+## Sentiment by Stanza
+
+```{r echo=F}
+
+ggplot(sentimentanalysis, aes(index, sentiment, fill = "red")) +
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  ggtitle("Sentiment by Stanza") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+---
+
+
+## CV
+
+# Link
+
+- Get in bed
+- Count sheep
